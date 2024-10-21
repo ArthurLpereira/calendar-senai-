@@ -54,18 +54,36 @@ function GerarDias(mes, ano) {
     }
 }
 
-function CarregarCalendario() {
+function CarregarCalendario(transicao) {
     atual.textContent = `${meses[MesAtual]} ${ano}`;
+    TransicaoMes(transicao)
     GerarDias(MesAtual, ano);
 }
 
+function TransicaoMes(transicao) {
+    dias.classList.remove('mes-atual');
+    dias.classList.add('mes-atual');
+
+    const direcao = transicao === 'entrando-mes' ? '100%' : '-100%';
+    dias.style.transform = `translateX(${direcao})`;
+    dias.style.opacity = '0';
+
+    setTimeout(() => {
+
+        atual.textContent = `${meses[MesAtual]} ${ano}`;
+        GerarDias(MesAtual, ano);
+
+        dias.style.transform = 'translateX(0)';
+        dias.style.opacity = '1';
+    }, 500);
+}
 btnVoltar.addEventListener('click', () => {
     MesAtual--;
     if (MesAtual < 0) {
         MesAtual = 11;
         ano--;
     }
-    CarregarCalendario();
+    CarregarCalendario('saindo-mes');
 });
 
 btnProximo.addEventListener('click', () => {
@@ -74,7 +92,7 @@ btnProximo.addEventListener('click', () => {
         MesAtual = 0;
         ano++;
     }
-    CarregarCalendario();
+    CarregarCalendario('entrando-mes');
 });
 
-CarregarCalendario();
+CarregarCalendario('mes-atual');
