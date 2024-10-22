@@ -54,6 +54,7 @@ function GerarDias(mes, ano) {
     }
 }
 
+
 function CarregarCalendario(transicao) {
     atual.textContent = `${meses[MesAtual]} ${ano}`;
     TransicaoMes(transicao)
@@ -61,11 +62,6 @@ function CarregarCalendario(transicao) {
 }
 
 function TransicaoMes(transicao) {
-    dias.classList.remove('mes-atual');
-    dias.classList.add('mes-atual');
-
-    const direcao = transicao === 'entrando-mes' ? '100%' : '-100%';
-    dias.style.transform = `translateX(${direcao})`;
     dias.style.opacity = '0';
 
     setTimeout(() => {
@@ -73,10 +69,10 @@ function TransicaoMes(transicao) {
         atual.textContent = `${meses[MesAtual]} ${ano}`;
         GerarDias(MesAtual, ano);
 
-        dias.style.transform = 'translateX(0)';
         dias.style.opacity = '1';
-    }, 500);
+    }, 300);
 }
+
 btnVoltar.addEventListener('click', () => {
     MesAtual--;
     if (MesAtual < 0) {
