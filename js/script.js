@@ -3,10 +3,9 @@ const dias = document.getElementById('dias');
 const btnVoltar = document.getElementById('anterior');
 const btnProximo = document.getElementById('proximo');
 const DivData = document.getElementById('data');
-const abrir_menu = document.getElementsByClassName ('hamburguer')[0];
-const menu = document.getElementsByClassName ('menu')[0];
-const $html = document.querySelector('html');
-const $checkbox = document.querySelector('#escuro_claro');
+const abrir_menu = document.getElementsByClassName('hamburguer')[0];
+const menu = document.getElementsByClassName('menu')[0];
+const mudarTema = document.getElementById('TrocarTema');
 
 let MesAtual = 9;
 let ano = 2024;
@@ -59,10 +58,9 @@ function GerarDias(mes, ano) {
     }
 }
 
-
 function CarregarCalendario(transicao) {
     atual.textContent = `${meses[MesAtual]} ${ano}`;
-    TransicaoMes(transicao)
+    TransicaoMes(transicao);
     GerarDias(MesAtual, ano);
 }
 
@@ -70,7 +68,6 @@ function TransicaoMes() {
     dias.style.opacity = '0';
 
     setTimeout(() => {
-
         atual.textContent = `${meses[MesAtual]} ${ano}`;
         GerarDias(MesAtual, ano);
 
@@ -99,12 +96,89 @@ btnProximo.addEventListener('click', () => {
 CarregarCalendario('mes-atual');
 
 abrir_menu.addEventListener('click', () => {
-    abrir_menu.classList.toggle('aberto')
-    menu.classList.toggle('ativo')
-})
+    abrir_menu.classList.toggle('aberto');
+    menu.classList.toggle('ativo');
 
-
-$checkbox.addEventListener('change', () => {
-    $html.classList.toggle('modo_escuro');
+    // Verificar se o menu está ativo
+    if (menu.classList.contains('ativo')) {
+        menu.style.backgroundColor = 'white'; // Fundo do menu ativo
+        menu.style.color = 'black'; // Texto do menu ativo
+    } else {
+        const temaAtual = localStorage.getItem('tema') || 'claro';
+        mudarCores(temaAtual); // Restabelecer cores com base no tema
+    }
 });
 
+// Função para mudar cores
+function mudarCores(tema) {
+    if (tema === 'escuro') {
+        document.body.style.backgroundColor = 'black';
+        document.body.style.color = 'white';
+        mudarTema.style.backgroundColor = 'black'; // Cor do botão
+
+        document.querySelectorAll('.dia').forEach(dia => {
+            dia.style.backgroundColor = 'black'; // Fundo da seção
+            dia.style.color = 'white'; // Cor do texto
+            dia.style.borderColor = 'white'; // Cor da borda para dias
+        });
+
+        document.querySelectorAll('.vazio').forEach(vazio => {
+            vazio.style.backgroundColor = 'black'; // Cor do fundo para os vazios
+            vazio.style.borderColor = 'white'; // Cor da borda para vazios
+        });
+
+        document.querySelectorAll('.barra').forEach(barra => {
+            barra.style.backgroundColor = 'white'; 
+        });
+
+        document.querySelectorAll('.div_semana').forEach(div_semana => {
+            div_semana.style.backgroundColor = 'white'; // Cor do fundo para as semanas
+            div_semana.style.color = 'black'; // Cor do texto para as semanas
+        });
+
+        menu.style.backgroundColor = 'white'; // Cor do fundo do menu
+        menu.style.color = 'black'; // Cor do texto do menu
+    } else {
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+        mudarTema.style.backgroundColor = 'white'; // Cor do botão
+        
+        document.querySelectorAll('.dia').forEach(dia => {
+            dia.style.backgroundColor = 'white'; // Fundo da seção
+            dia.style.color = 'black'; // Cor do texto
+            dia.style.borderColor = 'black'; // Cor da borda para dias
+        });
+
+        document.querySelectorAll('.vazio').forEach(vazio => {
+            vazio.style.backgroundColor = 'transparent'; // Cor do fundo para os vazios
+            vazio.style.borderColor = 'black'; // Cor da borda para vazios
+        });
+
+        document.querySelectorAll('.barra').forEach(barra => {
+            barra.style.backgroundColor = 'black'; 
+        });
+
+        document.querySelectorAll('.div_semana').forEach(div_semana => {
+            div_semana.style.backgroundColor = 'black'; // Cor do fundo para as semanas
+            div_semana.style.color = 'white'; // Cor do texto para as semanas
+        });
+
+        menu.style.backgroundColor = 'black'; // Cor do fundo do menu
+        menu.style.color = 'white'; // Cor do texto do menu
+    }
+}
+
+// Evento para trocar tema
+mudarTema.addEventListener('click', () => {
+    const temaAtual = localStorage.getItem('tema') === 'escuro' ? 'claro' : 'escuro';
+    mudarCores(temaAtual);
+
+    // Salvar tema no localStorage
+    localStorage.setItem('tema', temaAtual);
+});
+
+// Ao carregar a página, verificar o tema salvo
+window.addEventListener('load', () => {
+    const temaSalvo = localStorage.getItem('tema') || 'claro';
+    mudarCores(temaSalvo);
+});
