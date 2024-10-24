@@ -13,17 +13,15 @@ html {
     justify-content: center;
     flex-direction: column;
 }
-
-.navegacao {
+.navegacao{
     display: flex;
     gap: 30px;
 }
 
-span {
+#atual {
     font-size: 30px;
     text-transform: uppercase;
 }
-
 #anterior,
 #proximo {
     border: none;
@@ -104,14 +102,87 @@ span {
 }
 
 #dias {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 
 #data {
     margin-top: 20px;
     font-size: 20px;
 }
+nav{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 250px;
+}
+nav ul li:hover{
+    text-decoration: underline;
+    color: white;
+}
+.menu{
+    position: fixed;
+    top: 0;
+    left: -350px;
+    width: 350px;
+    height: 100%;
+    background-color: #000;
+    transition: left 0.5s ease;
+}
 
+.menu.ativo{
+    left: 0;
+}
+.menu ul li{
+    color: white;
+    text-transform: uppercase;
+    list-style: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.hamburguer,.barra{
+    position: fixed;
+}
+.hamburguer{
+    display: block;
+    border: none;
+    background-color: black;
+    cursor: pointer;
+}
+.hamburguer.aberto #barra1{
+    background-color: white;
+    transform: rotate(45deg) translate(6px, 8px);
+}
+.hamburguer.aberto #barra2{
+    background-color: transparent;
+}
+.hamburguer.aberto #barra3{
+    background-color: white;
+    transform: rotate(-45deg) translate(6px, -8px);
+}
+.barra{
+    top: 30px;
+    left: 30px;
+    background-color: black;
+    width: 2.5vw;
+    height: 5px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+#barra2{
+    top: 40px;
+}
+#barra3{
+    top: 50px;
+}
+
+html.modo-escuro {
+    background-color: black; /* Modo escuro */
+    color: white; /* Texto no modo escuro */
+}
+
+span.modo_escuro {
+    color: red; /* Cor do texto para elementos com a classe modo_escuro */
+}
 @media (max-width: 1024px) {
     .calendario {
         background-color: white;

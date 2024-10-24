@@ -3,6 +3,11 @@ const dias = document.getElementById('dias');
 const btnVoltar = document.getElementById('anterior');
 const btnProximo = document.getElementById('proximo');
 const DivData = document.getElementById('data');
+const abrir_menu = document.getElementsByClassName ('hamburguer')[0];
+const menu = document.getElementsByClassName ('menu')[0];
+const $html = document.querySelector('html');
+const $checkbox = document.querySelector('#escuro_claro');
+
 let MesAtual = 9;
 let ano = 2024;
 
@@ -61,7 +66,7 @@ function CarregarCalendario(transicao) {
     GerarDias(MesAtual, ano);
 }
 
-function TransicaoMes(transicao) {
+function TransicaoMes() {
     dias.style.opacity = '0';
 
     setTimeout(() => {
@@ -70,7 +75,7 @@ function TransicaoMes(transicao) {
         GerarDias(MesAtual, ano);
 
         dias.style.opacity = '1';
-    }, 300);
+    }, 400);
 }
 
 btnVoltar.addEventListener('click', () => {
@@ -92,3 +97,14 @@ btnProximo.addEventListener('click', () => {
 });
 
 CarregarCalendario('mes-atual');
+
+abrir_menu.addEventListener('click', () => {
+    abrir_menu.classList.toggle('aberto')
+    menu.classList.toggle('ativo')
+})
+
+
+$checkbox.addEventListener('change', () => {
+    $html.classList.toggle('modo_escuro');
+});
+
